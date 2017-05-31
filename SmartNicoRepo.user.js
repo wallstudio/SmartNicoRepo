@@ -5,7 +5,7 @@
 // @include     http://www.nicovideo.jp/my/top/*
 // @include     http://www.nicovideo.jp/my/top
 // @require http://nicovideo.cdn.nimg.jp/uni/js/lib/jquery/jquery-1.7.min.js
-// @version     0.1
+// @version     0.2
 // @grant       none
 // ==/UserScript==
 
@@ -18,7 +18,7 @@
     // 更新の確認
     let SmartNicoRepoVersion = {
         versionCheck : true,
-        myVersion: 0.1,
+        myVersion: 0.2,
         newstVersion: 0,
         referUrl: "https://wallstudio.github.io/SmartNicoRepo/version",
         division: "dev"
@@ -83,8 +83,11 @@
             if(e.className.match(/log-user-video-upload/)){
                 highlight(e, "rgb(238, 238, 255)");
             }
-            if(e.className.match(/log-user-seiga-image-clip/)){
+            if(e.className.match(/log-user-seiga-image-upload/)){
                 highlight(e, "rgb(238, 255, 238)");
+            }
+            if(e.className.match(/log-user-seiga-image-clip/)){
+                highlight(e, "");
             }
         });
     };
