@@ -11,7 +11,7 @@ UserScriptが実行できる環境が必要です．
 GreasemonkyやTamperMonkeyなどを導入し，上のリンクへ飛ぶとインストールダイアログが出ます．
 
 > * [ベータ版]() 
-> * [アルファ版]() 
+> * [アルファ版](https://github.com/wallstudio/SmartNicoRepo/raw/alpha/SmartNicoRepo.user.js) 
 >
 > 新しい機能が使えますが，不安定で問題が起きる可能性が高くなります．
 
