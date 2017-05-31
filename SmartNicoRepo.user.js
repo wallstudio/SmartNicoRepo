@@ -78,16 +78,17 @@
 
             if(e.className.match(/log-user-live-broadcast/)){
                 e.style.display = "none";
-            }
-            
-            if(e.className.match(/log-user-video-upload/)){
+            }else if(e.className.match(/log-user-video-upload/)){
                 highlight(e, "rgb(238, 238, 255)");
-            }
-            if(e.className.match(/log-user-seiga-image-upload/)){
+            }else if(e.className.match(/log-user-seiga-image-upload/)){
                 highlight(e, "rgb(238, 255, 238)");
-            }
-            if(e.className.match(/log-user-seiga-image-clip/)){
+            }else if(e.className.match(/log-user-seiga-image-clip/)){
                 highlight(e, "");
+            }else{
+                $(e).find(".log-target-thumbnail").css("float", "right");
+                $(e).find(".log-target-thumbnail").css("margin-right", "0");
+                $(e).find(".log-target-info").css("margin-left", "10px");
+                $(e).find(".log-footer").css("background-color", "rgba(255,255,255,0.8)");
             }
         });
     };
