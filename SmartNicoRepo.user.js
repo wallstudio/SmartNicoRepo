@@ -17,33 +17,29 @@
     // 更新の確認
     let SmartNicoRepoVersion = {
         versionCheck : true,
-        myVersion: 0.1, // VERSION_SIGIN  更新確認に使うので消さない
+        myVersion: 0.1,
         newstVersion: 0,
-        referUrl: {
-            stay : "https://github.com/wallstudio/SmartNicoRepo/raw/master/SmartNicoRepo.user.js",
-            bata : "https://github.com/wallstudio/SmartNicoRepo/raw/bata/SmartNicoRepo.user.js",
-            alpha: "https://github.com/wallstudio/SmartNicoRepo/raw/alpha/SmartNicoRepo.user.js",
-            dev: "https://github.com/wallstudio/SmartNicoRepo/raw/dev/SmartNicoRepo.user.js"
-        }
+        referUrl: "https://wallstudio.github.io/SmartNicoRepo/version",
+        division: "dev"
     }
     let updateCheck = function(){
         if(!SmartNicoRepoVersion.versionCheck) return;
         $.ajax({
             type:     "GET",
-            url:      SmartNicoRepoVersion.referUrl.dev,
+            url:      SmartNicoRepoVersion.referUrl,
             dataType: "text",
             success:  function (response) {
-                let versionStrMatch = response.match(/myVersion\s*:\s*([0-9]+\.[0-9]+)\s*,\s*\/\/ VERSION_SIGIN/);
+                let versionStrMatch = response.match(SmartNicoRepoVersion.division + "\\s+([0-9]+\\.[0-9]+)\\s*$");
                 if(!versionStrMatch) {
                     alert("更新確認失敗 0");
                     return;
                 }
-                let newstVersion = parseFloat(response);
+                let newstVersion = parseFloat(versionStrMatch[1]);
                 if(newstVersion > SmartNicoRepoVersion.myVersion){
                     SmartNicoRepoVersion.newstVersion = newstVersion;
                     alert("更新があります Ver." + newstVersion);
                 }
-                console.log("MyVersion:" + myVersion + " NewstVertion:" + newstVersion);
+                console.log("MyVersion:" + SmartNicoRepoVersion.myVersion + " NewstVertion:" + newstVersion);
             },
             error:    function () {
                 alert("更新確認失敗 1");
