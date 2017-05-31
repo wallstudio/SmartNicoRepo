@@ -3,6 +3,7 @@
 // @namespace   WallStudio
 // @description ニコニコ動画のニコレポを改良します．
 // @include     http://www.nicovideo.jp/my/top/*
+// @include     http://www.nicovideo.jp/my/top
 // @require http://nicovideo.cdn.nimg.jp/uni/js/lib/jquery/jquery-1.7.min.js
 // @version     0.1
 // @grant       none
