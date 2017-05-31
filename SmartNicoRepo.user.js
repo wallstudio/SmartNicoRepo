@@ -29,7 +29,7 @@
             url:      SmartNicoRepoVersion.referUrl,
             dataType: "text",
             success:  function (response) {
-                let versionStrMatch = response.match(SmartNicoRepoVersion.division + "\\s+([0-9]+\\.[0-9]+)\\s*$");
+                let versionStrMatch = response.match(SmartNicoRepoVersion.division + "\\s+([0-9]+\\.[0-9]+)\\s*");
                 if(!versionStrMatch) {
                     alert("更新確認失敗 0");
                     return;
