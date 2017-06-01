@@ -3,8 +3,9 @@
 // @namespace   WallStudio
 // @description ニコニコ動画のニコレポを改良します．
 // @include     http://www.nicovideo.jp/my/top/*
+// @include     http://www.nicovideo.jp/my/top
 // @require http://nicovideo.cdn.nimg.jp/uni/js/lib/jquery/jquery-1.7.min.js
-// @version     0.1
+// @version     0.2
 // @grant       none
 // ==/UserScript==
 
@@ -17,33 +18,29 @@
     // 更新の確認
     let SmartNicoRepoVersion = {
         versionCheck : true,
-        myVersion: 0.1, // VERSION_SIGIN  更新確認に使うので消さない
+        myVersion: 0.2,
         newstVersion: 0,
-        referUrl: {
-            stay : "https://github.com/wallstudio/SmartNicoRepo/raw/master/SmartNicoRepo.user.js",
-            bata : "https://github.com/wallstudio/SmartNicoRepo/raw/bata/SmartNicoRepo.user.js",
-            alpha: "https://github.com/wallstudio/SmartNicoRepo/raw/alpha/SmartNicoRepo.user.js",
-            dev: "https://github.com/wallstudio/SmartNicoRepo/raw/dev/SmartNicoRepo.user.js"
-        }
+        referUrl: "https://wallstudio.github.io/SmartNicoRepo/version",
+        division: "alpha"
     }
     let updateCheck = function(){
         if(!SmartNicoRepoVersion.versionCheck) return;
         $.ajax({
             type:     "GET",
-            url:      SmartNicoRepoVersion.referUrl.dev,
+            url:      SmartNicoRepoVersion.referUrl,
             dataType: "text",
             success:  function (response) {
-                let versionStrMatch = response.match(/myVersion\s*:\s*([0-9]+\.[0-9]+)\s*,\s*\/\/ VERSION_SIGIN/);
+                let versionStrMatch = response.match(SmartNicoRepoVersion.division + "\\s+([0-9]+\\.[0-9]+)\\s*");
                 if(!versionStrMatch) {
                     alert("更新確認失敗 0");
                     return;
                 }
-                let newstVersion = parseFloat(response);
+                let newstVersion = parseFloat(versionStrMatch[1]);
                 if(newstVersion > SmartNicoRepoVersion.myVersion){
                     SmartNicoRepoVersion.newstVersion = newstVersion;
                     alert("更新があります Ver." + newstVersion);
                 }
-                console.log("MyVersion:" + myVersion + " NewstVertion:" + newstVersion);
+                console.log("MyVersion:" + SmartNicoRepoVersion.myVersion + " NewstVertion:" + newstVersion);
             },
             error:    function () {
                 alert("更新確認失敗 1");
@@ -81,13 +78,17 @@
 
             if(e.className.match(/log-user-live-broadcast/)){
                 e.style.display = "none";
-            }
-            
-            if(e.className.match(/log-user-video-upload/)){
+            }else if(e.className.match(/log-user-video-upload/)){
                 highlight(e, "rgb(238, 238, 255)");
-            }
-            if(e.className.match(/log-user-seiga-image-clip/)){
+            }else if(e.className.match(/log-user-seiga-image-upload/)){
                 highlight(e, "rgb(238, 255, 238)");
+            }else if(e.className.match(/log-user-seiga-image-clip/)){
+                highlight(e, "");
+            }else{
+                $(e).find(".log-target-thumbnail").css("float", "right");
+                $(e).find(".log-target-thumbnail").css("margin-right", "0");
+                $(e).find(".log-target-info").css("margin-left", "10px");
+                $(e).find(".log-footer").css("background-color", "rgba(255,255,255,0.8)");
             }
         });
     };
