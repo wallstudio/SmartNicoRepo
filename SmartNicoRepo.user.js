@@ -51,38 +51,53 @@
 
 
     // 生放送を非表示
+    $("body").append("<style>.large img.video{height:auto !important;width:200px !important;}.large img.seiga_illust{height:150px !important;width:auto !important;}</style>");
     let filterLog = function(){
 
         let highlight = function(target, color){
             target.style.backgroundColor = color;
             $(target).find(".log-target-info").css("font-size", "150%");
             // 拡大
+            $(target).addClass("large");
             $(target).find(".log-target-thumbnail").css("height", "auto")
             $(target).find(".log-target-thumbnail").css("width", "200px");
-            try{
-                $(target).find("img.video").css("height", "auto");
-                $(target).find("img.video").css("width", "200px");
-            }catch(e){}
-            try{
-                $(target).find("img.seiga_image").css("height", "150px");
-                $(target).find("img.seiga_image").css("width", "auto");
-            }catch(e){}
         }
 
         $(".log").each(function(i,e){
+            //$(e).find(".LazyLoad").removeClass("LazyLoad");
             if(e.touched) return;
             e.touched = true;
+            // 遅延先読み
+            /*
+            if(!$(e).find(".log-target-thumbnail").hasClass("is-visible")){
+                try{
+                    let contentType = $(e).find(".log-target-info a").attr("href").match(/(sm|im)([0-9]+)/)[1];
+                    let contentID = $(e).find(".log-target-info a").attr("href").match(/(sm|im)([0-9]+)/)[2];
+                    switch(contentType){
+                        case "sm":
+                            $(e).find(".log-target-thumbnail").append("<a href='/watch/sm"+contentID+"?zeromypage_nicorepo'><img class='video' src='http://tn-skr1.smilevideo.jp/smile?i="+contentID+"'></a>");
+                            break;
+                        case "im":
+                            $(e).find(".log-target-thumbnail").append("<a href='http://seiga.nicovideo.jp/seiga/im"+contentID+"?zeromypage_nicorepo'><img class='seiga_illust' src='https://lohas.nicoseiga.jp/thumb/"+contentID+"z'></a>");
+                            break
+                        default:
+                            break;
+                    }
+                }catch(e){};
+            }
+            */
             // 整形
             let title = $(e).find(".log-body")[0];
             $(e).find(".log-target-info").before(title);
 
-            if(e.className.match(/log-user-live-broadcast/)){
+            let logInfo = $(e).find(".log-body > span")[0].innerHTML;
+            if(logInfo.match(/で生放送を開始しました。/)){
                 e.style.display = "none";
-            }else if(e.className.match(/log-user-video-upload/)){
+            }else if(logInfo.match(/<strong>動画を投稿しました。<\/strong>/)){
                 highlight(e, "rgb(238, 238, 255)");
-            }else if(e.className.match(/log-user-seiga-image-upload/)){
+            }else if(logInfo.match(/<strong>イラストを投稿しました。<\/strong>/)){
                 highlight(e, "rgb(238, 255, 238)");
-            }else if(e.className.match(/log-user-seiga-image-clip/)){
+            }else if(logInfo.match(/イラストをクリップしました。/)){
                 highlight(e, "");
             }else{
                 $(e).find(".log-target-thumbnail").css("float", "right");
@@ -93,6 +108,7 @@
         });
     };
     filterLog();
+    setTimeout(filterLog, 500);
 
     // 自動追加読み込み
     let loadLock = false;
