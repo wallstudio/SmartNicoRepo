@@ -5,7 +5,7 @@
 // @include     http://www.nicovideo.jp/my/top/*
 // @include     http://www.nicovideo.jp/my/top
 // @require http://nicovideo.cdn.nimg.jp/uni/js/lib/jquery/jquery-1.7.min.js
-// @version     0.2
+// @version     0.3
 // @grant       none
 // ==/UserScript==
 
@@ -18,7 +18,7 @@
     // 更新の確認
     let SmartNicoRepoVersion = {
         versionCheck : true,
-        myVersion: 0.2,
+        myVersion: 0.3,
         newstVersion: 0,
         referUrl: "https://wallstudio.github.io/SmartNicoRepo/version",
         division: "dev"
